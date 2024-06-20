@@ -4,8 +4,8 @@ include ("usuarioC.php");
 
 
 
-$r = usuario::mostrarDatos();
-echo $r;
+echo usuario::mostrarDatos();
+
 
 
 

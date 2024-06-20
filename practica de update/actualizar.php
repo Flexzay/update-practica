@@ -10,8 +10,8 @@ $password = $_GET['contraseña'];
 
 $respuesta = Usuario::Actualizar($documento, $nombre, $fechaNacimiento, $password);
 
-if ($respuesta > 0) {
-    echo 'Error undefined';
-} else {
+if ($respuesta != 0) {
     header('location: consultar_usuario.php');
+} else {
+    
 }

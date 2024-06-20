@@ -98,22 +98,31 @@ class Usuario
     public static function Actualizar($documento, $nombre, $fechaNacimiento, $password)
     {
         $conexion = mysqli_connect('localhost', 'root', '', 'FOTO');
-        $identifiacdor = $documento;
-
-        $sql = "update Tb_usuarios ";
-        $sql .= "set documento = '$documento',";
-        $sql .= "nombre = '$nombre',";
-        $sql .= "fec_nac = '$fechaNacimiento',";
-        $sql .= "foto= '',";
-        $sql .= "contraseña = '$password'";
-        $sql .= "where documento = '$identifiacdor' ";
-
+        $identificador = $documento;
+    
+        $sql = "UPDATE Tb_usuarios SET documento='$documento', nombre='$nombre', fec_nac='$fechaNacimiento', contraseña='$password' WHERE documento = '$identificador'";
+        // Ejecutar la actualización
         $conexion->query($sql);
-
+    
+        // Obtener el número de filas afectadas
         $conexion->affected_rows;
-
+    
+        // Ahora realizar una consulta para obtener los datos actualizados
+        $sql = "SELECT documento, nombre FROM Tb_usuarios WHERE documento = '$identificador'";
+        $resultado = $conexion->query($sql);
+    
+        $salida = '';
+        while ($fila = $resultado->fetch_assoc()) {
+            $salida .= '<h1> Documento: ' . $fila['documento'] . '</h1>';
+            $salida .= '<h2> Nombre: ' . $fila['nombre'] . '</h2>';
+            $salida .= '<a href="registro_usuario.php?doc=' . $fila['documento'] . '"> Actualizar </a>';
+            $salida .= '<hr>';
+        }
+    
         $conexion->close();
+        return $salida;
     }
+    
 
 
 
